@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "OTEL_LOG_LEVEL=DEBUG node -r ./src/tracing.js ./src/app.js"
+    "start": "OTEL_LOG_LEVEL=DEBUG node -r ./src/tracing.js ./src/app.js 2>&1 | tee trace-debug.txt"
   },
   "dependencies": {
     "@opentelemetry/api": "^1.8.0",

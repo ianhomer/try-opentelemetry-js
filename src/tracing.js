@@ -6,6 +6,10 @@ const process = require("process");
 const uuid = require("uuid");
 const opentelemetry = require("@opentelemetry/sdk-node");
 const {
+    ConsoleSpanExporter,
+    SimpleSpanProcessor,
+} = require('@opentelemetry/sdk-trace-base');
+const {
   getNodeAutoInstrumentations,
 } = require("@opentelemetry/auto-instrumentations-node");
 const {
@@ -28,14 +32,11 @@ const customHeaders = {
   foo: "foo-value",
 };
 
-const collectorExporter = {
+const traceExporter = new OTLPTraceExporter({
   url: "http://127.0.0.1:4317/v1/traces",
   headers: customHeaders,
   concurrencyLimit: 10,
-};
-const exporter = new OTLPTraceExporter(
-  collectorExporter,
-);
+});
 
 const OTEL_SERVICE_RESOURCE = new Resource({
   [SemanticResourceAttributes.SERVICE_NAME]: "otel-express-node",
@@ -44,8 +45,9 @@ const OTEL_SERVICE_RESOURCE = new Resource({
 });
 
 const provider = new WebTracerProvider({ resource: OTEL_SERVICE_RESOURCE });
+provider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
 provider.addSpanProcessor(
-  new BatchSpanProcessor(exporter, {
+  new BatchSpanProcessor(traceExporter, {
     // The maximum queue size. After the size is reached spans are dropped.
     maxQueueSize: 1000,
     // The interval between two consecutive exports
@@ -58,13 +60,14 @@ const sdk = new opentelemetry.NodeSDK({
   resource: new Resource({
     [SemanticResourceAttributes.SERVICE_NAME]: "my-service",
   }),
-  exporter,
+  traceExporter,
   instrumentations: [getNodeAutoInstrumentations()],
 });
 
 // initialize the SDK and register with the OpenTelemetry API
 // this enables the API to record telemetry
-sdk.start();
+sdk
+  .start()
 
 // gracefully shut down the SDK on process exit
 process.on("SIGTERM", () => {

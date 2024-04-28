@@ -1,1 +1,3 @@
 node_modules/
+collector-output.txt
+trace-debug.txt
