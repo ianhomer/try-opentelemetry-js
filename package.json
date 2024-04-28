@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "OTEL_LOG_LEVEL=DEBUG node -r ./src/tracing.js ./src/app.js 2>&1 | tee trace-debug.txt"
+    "start": "OTEL_LOG_LEVEL=DEBUG node -r ./src/tracing.js ./src/app.js 2>&1 | tee trace-debug.txt",
+    "start-collector": "node ./src/collector.js"
   },
   "dependencies": {
     "@opentelemetry/api": "^1.8.0",
@@ -12,6 +13,7 @@
     "@opentelemetry/sdk-trace-base": "^1.24.0",
     "@opentelemetry/sdk-trace-web": "^1.24.0",
     "@opentelemetry/semantic-conventions": "^1.24.0",
+    "body-parser": "^1.20.2",
     "express": "^4.19.2",
     "uuid": "^9.0.1"
   }
