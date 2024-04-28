@@ -14,6 +14,9 @@ importers:
       '@opentelemetry/auto-instrumentations-node':
         specifier: ^0.45.0
         version: 0.45.0(@opentelemetry/api@1.8.0)
+      '@opentelemetry/exporter-trace-otlp-http':
+        specifier: ^0.51.0
+        version: 0.51.0(@opentelemetry/api@1.8.0)
       '@opentelemetry/resources':
         specifier: ^1.24.0
         version: 1.24.0(@opentelemetry/api@1.8.0)
@@ -23,12 +26,18 @@ importers:
       '@opentelemetry/sdk-trace-base':
         specifier: ^1.24.0
         version: 1.24.0(@opentelemetry/api@1.8.0)
+      '@opentelemetry/sdk-trace-web':
+        specifier: ^1.24.0
+        version: 1.24.0(@opentelemetry/api@1.8.0)
       '@opentelemetry/semantic-conventions':
         specifier: ^1.24.0
         version: 1.24.0
       express:
         specifier: ^4.19.2
         version: 4.19.2
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
 
 packages:
 
@@ -463,6 +472,12 @@ packages:
 
   '@opentelemetry/sdk-trace-node@1.24.0':
     resolution: {integrity: sha512-QgByHmM9uloTpcYEEyW9YJEIMKHFSIM677RH9pJPWWwtM2NQFbEp/8HIJw80Ymtaz6cAxg1Kay1ByqIVzq3t5g==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.0.0 <1.9.0'
+
+  '@opentelemetry/sdk-trace-web@1.24.0':
+    resolution: {integrity: sha512-G0q8aZPUhRtO/iw2BkjHeNqCMBf0JQX5VqqiPWXn9u5iRkpeQ6LZrGaiymKWOdEqtXCgM44yrCY/4WoJqR0bjQ==}
     engines: {node: '>=14'}
     peerDependencies:
       '@opentelemetry/api': '>=1.0.0 <1.9.0'
@@ -1719,6 +1734,13 @@ snapshots:
       '@opentelemetry/propagator-jaeger': 1.24.0(@opentelemetry/api@1.8.0)
       '@opentelemetry/sdk-trace-base': 1.24.0(@opentelemetry/api@1.8.0)
       semver: 7.6.0
+
+  '@opentelemetry/sdk-trace-web@1.24.0(@opentelemetry/api@1.8.0)':
+    dependencies:
+      '@opentelemetry/api': 1.8.0
+      '@opentelemetry/core': 1.24.0(@opentelemetry/api@1.8.0)
+      '@opentelemetry/sdk-trace-base': 1.24.0(@opentelemetry/api@1.8.0)
+      '@opentelemetry/semantic-conventions': 1.24.0
 
   '@opentelemetry/semantic-conventions@1.24.0': {}
 
